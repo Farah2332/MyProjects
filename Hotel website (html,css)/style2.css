@@ -1,0 +1,28 @@
+.bg-img-1{
+ background-image: url('bg.jpg');
+}
+.bg-img-2{
+ background-image: url('rooms.png');
+}
+.bg-img-3{
+ background-image: url('restaurant.png');
+}
+.bg-img-4{
+ background-image: url('gym.png');
+}
+.bg-img-5{
+ background-image: url('pool.png');
+}
+.bg-img-6{
+ background-image: url('games.png');
+}
+.bg-img-7{
+ background-image: url('restaurant.png');
+}
+.carousel-image{
+	height: 150vh;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+
+}

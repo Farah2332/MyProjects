@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>para  ella Official Site</title>
+    <link rel="icon" type="images/x-icon" href="images/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://kit.fontawesome.com/e1617174e4.js" crossorigin="anonymous"></script>
+
+<script>
+function addToWishlist(description, price, imageUrl) {
+    var productDetails = {
+        description: description,
+        price: price,
+        imageUrl: imageUrl,
+    };
+
+    var wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    wishlist.push(productDetails);
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+    // Dispatch a custom event
+    var wishlistEvent = new Event('wishlistUpdated');
+    document.dispatchEvent(wishlistEvent);
+
+    // Send a request to the server to add the product to the wishlist
+    fetch('/addToWishlist', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin', // Include credentials (e.g., session) in the request
+        body: JSON.stringify(productDetails),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Server response:', data); // Log the response for debugging
+        if (data.success) {
+            alert('Added to your wishlist');
+        } else {
+            alert('Failed to add to your wishlist: ' + data.message);
+        }
+    })
+    .catch((error) => {
+        console.error('Fetch error:', error);
+        alert('Failed to add to your wishlist. Please check the console for details.');
+    });
+}
+
+
+    function addToCart(description, price, imageUrl) {
+    var productDetails = {
+        description: description,
+        price: price,
+        imageUrl: imageUrl,
+    };
+
+    // Send a request to the server to add the product to the wishlist
+    fetch('/addToCart', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin', // Include credentials (e.g., session) in the request
+        body: JSON.stringify(productDetails),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Server response:', data); // Log the response for debugging
+        if (data.success) {
+            alert('Added to your shopping cart');
+        } else {
+            alert('Failed to add to your shopping cart: ' + data.message);
+        }
+    })
+    .catch((error) => {
+        console.error('Fetch error:', error);
+        alert('Failed to add to your shopping cart. Please check the console for details.');
+    });
+}
+</script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+        }
+
+        nav {
+            width: 100%;
+            background: white;
+            height: 80px;
+            position: fixed;
+            z-index: 3;
+            top: 0px;
+       
+
+
+
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            float: right;
+            margin-bottom: auto;
+            font-size: 20px;
+        }
+
+        a:hover {
+            background:white;
+        }
+
+        ul li ul {
+            background: white;
+        }
+
+        ul li ul li {
+            float: none;
+        }
+
+        ul li ul {
+            display: none;
+        }
+
+        ul li:hover ul {
+            display: block;
+            position: fixed;
+            z-index: 1000;
+        }
+
+        .logo img {
+            position: fixed;
+         top: 0px;
+            width: 10%;
+            z-index: 4;
+        }
+
+        nav a {
+            width: 100px;
+            display: block;
+            padding: 5px;
+            text-decoration: none;
+         
+            text-align: center;
+         
+            color:black;
+        }
+
+        div {
+            width: 100%;
+            margin: auto;
+        }
+
+        .search-box {
+            margin-right: auto; /* Pushes it to the right */
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            padding: 15px;
+            border: none;
+            font-size: 16px;
+            background-color: white; /* Gold color */
+            color: black;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 5px;
+            background-color:white;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px; /* Adjust the spacing */
+
+        }
+         
+
+        input[type="text"] {
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+        }
+        .contact img{
+            width: 30px;
+            height: 30px;
+        }
+        .search img{
+            width: 30px;
+            height: 30px;
+        }
+         .shopcart img{
+            width: 30px;
+            height: 30px;
+              margin-top: 2px;
+        }
+          .wishlist img{
+            width: 30px;
+            height: 30px;
+              margin-top: 1px;
+        }
+        .service img{
+            width: 30px;
+            height: 30px;
+               margin-top: -2px;
+        }
+        .cur img{
+            width: 40px;
+            height: 40px;
+            margin-top: -5px;
+        }
+        .contact ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 2px; /* Set the font size for the dropdown items */
+    font-family: 'Arial', sans-serif; /* Set a different font style */
+}
+
+.contact ul li {
+    float: none;
+}
+
+.contact ul li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black; /* Set the default text color */
+    font-size: 15px;
+}
+
+.contact ul li a:hover {
+    background: gray; /* Set the background color on hover */
+    color: white; /* Set the text color on hover */
+}
+      .second-nav {
+            width: 100%;
+            background: white;
+            height: 40px;
+            position: fixed;
+            z-index: 2;
+            top: 80px; /* Adjust this top value to leave space for the first navigation bar */
+        }
+
+        .second-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: space-around; /* Align items evenly across the width */
+        }
+
+        .second-nav li {
+            font-size: 14.5px;
+        }
+
+        .second-nav li a {
+            width: 200PX;
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+            display: block;
+        }
+
+   
+        .second-nav li:hover ul {
+            display: block;
+          
+        }
+
+        .second-nav li ul {
+            background: white;
+            display: none;
+            position: absolute;
+            z-index: 1000;
+        }
+            
+        .second-nav li ul li {
+            float: none;
+            background: none; /* Remove the background color */
+        }
+
+        .second-nav li ul li:hover {
+            background: gray;
+            color: white; /* Set text color to white on hover */
+        }
+        .second-nav ul li ul li a:hover{
+            background: gray;
+            color: white;
+        }
+        .second-nav ul li a:hover{
+            color: white;
+            background: gray;
+        }
+        .product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Align items to the left */
+    margin-top: 150px;
+    width: 100%;
+
+}
+
+.product1 {
+    text-align: center;
+    width: 320px;
+    margin: 10px;
+    height: 150px;
+    margin-left: 2%;
+}
+
+.product1 img {
+    width: 60%;
+    height: auto;
+    order: 0; /* Set the order to 0 to place the image at the beginning */
+}
+
+.product-description {
+    color: black;
+    margin-top: 10px;
+}
+
+.product-price {
+    color: #E4BB40;
+    margin-top: 5px;
+}
+.wishlist-btn,
+.cart-btn {
+    display: inline-block; /* Make buttons appear inline */
+    padding: 8px 15px; /* Adjust padding as needed */
+    margin-top: 10px; /* Adjust the top margin */
+    cursor: pointer;
+}
+
+.cart-btn:hover{
+       /* Set the background color on hover */
+    color: white;
+}
+.wishlist-btn:hover{
+       /* Set the background color on hover */
+    color: white;
+}
+.wishlist-btn img,
+.cart-btn img {
+    width: 20px; /* Adjust the width of the images */
+    height: 20px; /* Adjust the height of the images */
+    margin-right: 5px; /* Adjust the right margin between the image and text */
+}
+.product1 img {
+   
+    height: auto; /* Maintain the aspect ratio */
+    border-radius: 8px; /* Add rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    transition: transform 0.3s ease-in-out; /* Add a smooth transition effect on hover */
+}
+
+.product1 img:hover {
+    transform: scale(1.1); /* Enlarge the image on hover */
+}
+body {
+    margin: 0;
+    padding: 0;
+    background: #f8f8f8; /* Set a light gray background color */
+    font-family: 'Arial', sans-serif; /* Set a default font family */
+}
+   footer {
+             /* Initially hide the footer */
+            background: #000; /* Black background */
+            color: #fff; /* White text */
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+          
+        }
+
+       footer a {
+    color: #E4BB40; /* Gold color for links */
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright {
+    margin-bottom: 10px; /* Add margin for spacing between copyright and social icons */
+}
+
+.social-icons {
+    display: flex; /* Display social icons in a row */
+    justify-content: center;
+    align-items: center;
+}
+
+.social-icons a {
+    margin: 0 10px; /* Add margin between social icons for spacing */
+}
+
+/* Add a decorative element for a touch of gold sparkle */
+.decorative-element {
+    color: #E4BB40;
+    font-size: 24px;
+    margin-top: 10px; /* Adjust margin for spacing */
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="logo"><a href="pants.html"><img src="logo.gif" alt="logo" width="130px" height="100px"></a></div>
+    <nav>
+        <ul>
+             <li>
+                <div class="cur"><a href="creditcart.html"><img src="currency.jpeg"></a></div>
+            </li>
+            <li>
+                <div class="service"><a href="rating.html"><img src="service.png"></a></div>
+            </li>
+            <li>
+                <div class="shopcart"><a href="cart.html"><img src="shopping-cart.png"></a></div>
+            </li>
+            <li>
+                <div class="wishlist"><a href="wishlist.html"><img src="wishlist.png"></a></div>
+            </li>
+           
+             
+             <li>
+                <div class="contact"><a href="#"><img src="contact.jpeg"></a>
+                <ul>
+                    <li><a href="loginsignup.html">Sign Up/Login</a></li>
+                    <li><a href="MyProfile.html">MyProfile</a></li>
+                </ul>
+            </div>
+            </li>
+              <li>
+                        <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search...">
+    <button onclick="performSearch()">
+        <div class="search"><img src="search.png" alt="Search"></div>
+    </button>
+</div>
+            </li>
+           
+        </ul>
+    </nav>
+      <nav class="second-nav">
+        <ul>
+            <li>
+                <a href="#">Women Clothing</a>
+                <!-- Dropdown for Women Clothing -->
+                <ul>
+                    <li><a href="pants.html">Pants</a></li>
+                    <li><a href="shirts.html">Shirts</a></li>
+              
+                </ul>
+            </li>
+            <li><a href="shoes.html">Women Shoes</a></li>
+            <li><a href="jewerly.html">Women Jewelry & Accessories</a></li>
+            <li><a href="kitchen.html">Home & Kitchen</a></li>
+            <li><a href="beauty.html">Beauty & Health</a></li>
+        </ul>
+    </nav>
+       <div class="product-container">
+        <!-- Product 1 -->
+        <div class="product1">
+            <img src="shirts/shirt1.png" alt="Product 1">
+            <div class="product-description">Qutie Contrast Collar Cable Knit 2 In 1 Blouse</div>
+            <div class="product-price">$10.74</div>
+             <button class="wishlist-btn" onclick="addToWishlist('Qutie Contrast Collar Cable Knit 2 In 1 Blouse', '10.74', 'shirts/shirt1.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+           <button class="cart-btn" onclick="addToCart('Qutie Contrast Collar Cable Knit 2 In 1 Blouse', '10.74', 'shirts/shirt1.png')">
+        <img src="shopping-cart.png" alt="Add to Shopping Cart">
+    </button>
+        </div>
+
+
+
+         <div class="product1">
+            <img src="shirts/shirt2.png" alt="Product 1">
+            <div class="product-description">LUNE Plaid Print Button Front Blouse</div>
+            <div class="product-price">$12.69</div>
+                 <button class="wishlist-btn" onclick="addToWishlist('LUNE Plaid Print Button Front Blouse', '12.69', 'shirts/shirt2.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('LUNE Plaid Print Button Front Blouse', '12.69', 'shirts/shirt2.png')">
+        <img src="shopping-cart.png" alt="Add to Shopping Cart">
+    </button>
+        </div>
+
+
+         <div class="product1">
+            <img src="shirts/shirt3.png" alt="Product 1">
+            <div class="product-description">EZwear Plus Color Block Drop Shoulder Shirt</div>
+            <div class="product-price">$12.16</div>
+        <button class="wishlist-btn" onclick="addToWishlist('EZwear Plus Color Block Drop Shoulder Shirt', '12.16', 'shirts/shirt3.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('EZwear Plus Color Block Drop Shoulder Shirt', '12.16', 'shirts/shirt3.png')">
+        <img src="shopping-cart.png" alt="Add to Shopping Cart">
+    </button>
+        </div>
+
+        
+          <div class="product1">
+            <img src="shirts/shirt4.png" alt="Product 1">
+            <div class="product-description">Qutie Solid Button Front Shirt With Tank Top</div>
+            <div class="product-price">$11.22</div>
+                        <button class="wishlist-btn" onclick="addToWishlist('Qutie Solid Button Front Shirt With Tank Top', '11.22', 'shirts/shirt4.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('Qutie Solid Button Front Shirt With Tank Top', '11.22', 'shirts/shirt4.png')">
+       <img src="shopping-cart.png" alt="Add to Shopping Cart">
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+         <br>
+        <br>
+        <br>
+        <br>
+         <br>
+        <br>
+        <br>
+        <br>
+         <br>
+         <br>
+        <br>
+      
+          <div class="product-container">
+            <div class="product1">
+            <img src="shirts/shirt5.png" alt="Product 1">
+            <div class="product-description">Frenchy Two Tone Lantern Sleeve 2 In 1 Blouse</div>
+            <div class="product-price">$12.10</div>
+                        <button class="wishlist-btn" onclick="addToWishlist('Frenchy Two Tone Lantern Sleeve 2 In 1 Blouse', '12.10', 'shirts/shirt5.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('Frenchy Two Tone Lantern Sleeve 2 In 1 Blouse', '12.10', 'shirts/shirt5.png')">
+       <img src="shopping-cart.png" alt="Add to Shopping Cart">
+   </button>
+        </div>
+  
+     <div class="product1">
+            <img src="shirts/shirt6.png" alt="Product 1">
+            <div class="product-description">LUNE Plaid Print Drop Shoulder Shirt</div>
+            <div class="product-price">$12.17</div>
+                        <button class="wishlist-btn" onclick="addToWishlist('LUNE Plaid Print Drop Shoulder Shirt', '12.17', 'shirts/shirt6.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('LUNE Plaid Print Drop Shoulder Shirt', '12.17', 'shirts/shirt6.png')">
+       <img src="shopping-cart.png" alt="Add to Shopping Cart">
+   </button>
+        </div>
+
+
+  <div class="product1">
+            <img src="shirts/shirt7.png" alt="Product 1">
+            <div class="product-description">Coolane Plaid Print Drop Shoulder Hooded Shirt</div>
+            <div class="product-price">$10.66</div>
+                        <button class="wishlist-btn" onclick="addToWishlist('Coolane Plaid Print Drop Shoulder Hooded Shirt', '10.66', 'shirts/shirt7.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('Coolane Plaid Print Drop Shoulder Hooded Shirt', '10.66', 'shirts/shirt7.png')">
+       <img src="shopping-cart.png" alt="Add to Shopping Cart">
+   </button>
+        </div>
+
+
+          <div class="product1">
+            <img src="shirts/shirt8.png" alt="Product 1">
+            <div class="product-description">Essnce Plaid Drop Shoulder Shirt</div>
+            <div class="product-price">$12.28</div>
+                        <button class="wishlist-btn" onclick="addToWishlist('Essnce Plaid Drop Shoulder Shirt', '12.28', 'shirts/shirt8.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('Essnce Plaid Drop Shoulder Shirts', '12.28', 'shirts/shirt8.png')">
+       <img src="shopping-cart.png" alt="Add to Shopping Cart">
+   </button>
+        </div>
+    
+</div>
+  <br>
+        <br>
+        <br>
+        <br>
+         <br>
+        <br>
+        <br>
+        <br>
+         <br>
+        <br>
+        <br>
+        <br>
+         <br>
+        <br>
+        <br>
+        <br>
+         <br>
+        <br>
+       <br>
+       <br>
+           <br>
+       <br>
+       <br>
+        
+
+ <div class="product-container">
+            <div class="product1">
+            <img src="shirts/shirt9.png" alt="Product 1">
+            <div class="product-description">Privé Button Front Pleated Waist Drop Shoulder Blouse</div>
+            <div class="product-price">$12.40</div>
+                        <button class="wishlist-btn" onclick="addToWishlist('Privé Button Front Pleated Waist Drop Shoulder Blouse', '12.40', 'shirts/shirt9.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('Privé Button Front Pleated Waist Drop Shoulder Blouse', '12.40', 'shirts/shirt9.png')">
+       <img src="shopping-cart.png" alt="Add to Shopping Cart">
+   </button>
+        </div>
+  
+     <div class="product1">
+            <img src="shirts/shirt10.png" alt="Product 1">
+            <div class="product-description">Modely Houndstooth Print Puff Sleeve Peplum 2 In 1 Blouse</div>
+            <br>
+            <div class="product-price">$12.64</div>
+                        <button class="wishlist-btn" onclick="addToWishlist('Modely Houndstooth Print Puff Sleeve Peplum 2 In 1 Blouse', '12.64', 'shirts/shirt10.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('Modely Houndstooth Print Puff Sleeve Peplum 2 In 1 Blouse', '12.64', 'shirts/shirt10.png')">
+       <img src="shopping-cart.png" alt="Add to Shopping Cart">
+   </button>
+        </div>
+
+
+  <div class="product1">
+            <img src="shirts/shirt11.png" alt="Product 1">
+            <div class="product-description">Privé Draped Collar Lantern Sleeve Crop Blouse</div>
+            <div class="product-price">$12.00</div>
+                        <button class="wishlist-btn" onclick="addToWishlist('Privé Draped Collar Lantern Sleeve Crop Blouse', '12.00', 'shirts/shirt11.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+              <button class="cart-btn" onclick="addToCart('Privé Draped Collar Lantern Sleeve Crop Blouse', '12.00', 'shirts/shirt11.png')">
+       <img src="shopping-cart.png" alt="Add to Shopping Cart">
+   </button>
+        </div>
+
+
+          <div class="product1">
+            <img src="shirts/shirt12.png" alt="Product 1">
+            <div class="product-description">Privé Colorblock Contrast Collar Blouse</div>
+            <div class="product-price">$14.10</div>
+                        <button class="wishlist-btn" onclick="addToWishlist('Privé Colorblock Contrast Collar Blouse', '14.10', 'jewerly/jewerly12.png')">
+        <img src="wishlist.png" alt="Add to Wishlist">
+    </button>
+             <button class="cart-btn" onclick="addToCart('Privé Colorblock Contrast Collar Blouse', '14.10', 'jewerly/jewerly12.png')">
+       <img src="shopping-cart.png" alt="Add to Shopping Cart">
+   </button>
+        </div>
+    
+</div>
+  <br>
+        <br>
+        <br>
+         <br>
+        <br>
+        <br>
+        <br>
+         <br>
+         <br>
+           <br>
+        <br>
+        <br>
+         <br>
+        <br>
+        <br>
+        <br>
+         <br>
+         <br>
+        <br>
+          <br>
+        <br>
+        <br>
+         <br
+           <br>
+        <br>
+        <br>
+         <br>
+        <br>
+        <br>
+        <br>
+         <br>
+         <br>
+        
+
+ <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                <p>&copy; 2023 para ella. All rights reserved.</p>
+            </div>
+            <div class="social-icons">
+                <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="decorative-element">
+
+        <span>&#9733;</span>
+        <span>&#9733;</span>
+        <span>&#9733;</span>
+        <span>&#9733;</span>
+        <span>&#9733;</span>
+    
+        </div>
+    </footer>
+    <script>
+   function performSearch() {
+    // Get the value entered by the user
+    var searchValue = document.getElementById('searchInput').value.toLowerCase();
+
+    // Define the mapping of keywords to URLs
+    var searchMappings = {
+        'pants': 'pants.html',
+        'shirts': 'shirts.html',
+        'accessories': 'jewerly.html', // Corrected spelling
+        'jewerly': 'jewerly.html', // Corrected spelling
+        'home': 'kitchen.html',
+        'kitchen': 'kitchen.html',
+        'shoes': 'shoes.html',
+        'beauty': 'beauty.html',
+        'care products': 'beauty.html'
+        // Add more mappings as needed
+    };
+
+    // Check if the entered value is in the mappings
+    if (searchMappings.hasOwnProperty(searchValue)) {
+        // Redirect the user to the corresponding URL
+        window.location.href = searchMappings[searchValue];
+    } else {
+        // Handle the case when the entered value is not found
+        alert('No matching result found for: ' + searchValue);
+    }
+}
+
+</script>
+
+</body>
+</html>

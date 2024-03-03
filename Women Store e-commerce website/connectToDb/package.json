@@ -1,0 +1,23 @@
+{
+  "name": "connect-to-db",
+  "version": "0.0.0",
+  "description": "connectToDb",
+  "scripts": {
+    "start": "node server"
+  },
+  "author": {
+    "name": ""
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.14"
+  },
+  "engines": {
+    "node": "^8.0.0"
+  },
+  "dependencies": {
+    "cookie-session": "^2.0.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mysql": "^2.18.1"
+  }
+}

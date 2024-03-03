@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Profile</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+            padding: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #ccc;
+        }
+
+        .plus-overlay {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .plus-overlay:hover {
+            background: #e0e0e0;
+        }
+
+        .options-container {
+            display: none;
+            position: absolute;
+            top: -70px;
+            right: 5px;
+            background: white;
+            border-radius: 5px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+            z-index: 1;
+        }
+
+        .option-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .set-photo-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .choose-from-library-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+           .label, .user-name, .email-country-label, .preference-label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .preference-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .preference-option {
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #E4BB40;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .preference-option.selected {
+            background-color: #f8a25c;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+     
+        .success-message {
+            color: green;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .save-button, .sign-out-button {
+            background-color: #E4BB40;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+    .loader-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: animateBg 10s linear infinite;
+        z-index: 9999;
+    }
+
+    @keyframes animateBg {
+        0%
+        {
+            filter: hue-rotate(0deg);
+        }
+        100%
+        {
+            filter: hue-rotate(360deg);
+        }
+    }
+
+    .loader {
+        position: relative;
+        width: 100px;
+        height: 100px;
+    }
+
+    .loader span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(calc(18deg * var(--i)));
+        transition-timing-function: 2s;
+    }
+
+    .loader span::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: #00ff0a;
+        box-shadow: 0 0 10px #00ff0a,
+                    0 0 20px #00ff0a,
+                    0 0 40px #00ff0a,
+                    0 0 60px #00ff0a,
+                    0 0 80px #00ff0a,
+                    0 0 100px #00ff0a;
+        animation: animate 2s linear infinite;
+        animation-delay: calc(0.1s * var(--i));
+    }
+
+    @keyframes animate {
+        0%
+        {
+            transform: scale(1);
+        }
+        80%,100%
+        {
+            transform: scale(0);
+        }
+    }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <h2>My Profile</h2>
+    
+    <div class="options-container" id="options-container">
+        <button class="option-button" onclick="openCamera()">Take photo</button>
+
+        <button class="choose-from-library-button" onclick="chooseFromLibrary()">Choose from library</button>
+        <button class="option-button" onclick="removePicture()">Remove current picture</button>
+    </div>
+
+    <div class="profile-image" onclick="showOptions()">
+        <div class="plus-overlay">+</div>
+    </div>
+    
+    <div class="label">Nickname:</div>
+    <div class="user-name">John Doe</div>
+    
+    <div class="label email-country-label">Email: user@example.com | Country: USA</div>
+    
+    <div class="label preference-label">Which are your favorite styles?</div>
+    <div class="preference-options">
+          <div class="preference-options">
+        <button class="preference-option" onclick="toggleOption(this)">Basics</button>
+        <button class="preference-option" onclick="toggleOption(this)">Casual</button>
+        <button class="preference-option" onclick="toggleOption(this)">Sexy</button>
+        <button class="preference-option" onclick="toggleOption(this)">Sporty</button>
+        <button class="preference-option" onclick="toggleOption(this)">Vintage</button>
+        <button class="preference-option" onclick="toggleOption(this)">Vacation</button>
+        <button class="preference-option" onclick="toggleOption(this)">Party</button>
+        <button class="preference-option" onclick="toggleOption(this)">Workwear</button>
+        <button class="preference-option" onclick="toggleOption(this)">Wedding guest</button>
+    </div>
+    </div>
+          <div class="success-message" id="success-message"></div>
+    
+    <div class="button-container">
+        <button class="save-button" onclick="savePreferences()">Save Preferences</button>
+        <button class="sign-out-button" onclick="signOut()">Sign Out</button>
+    </div>
+</div>
+
+<script>
+    let stream;
+
+let optionsVisible = false;
+
+    function showOptions() {
+        const optionsContainer = document.getElementById('options-container');
+        optionsVisible = !optionsVisible;
+
+        if (optionsVisible) {
+            optionsContainer.style.display = 'flex';
+        } else {
+            optionsContainer.style.display = 'none';
+        }
+    }
+
+    function hideOptions() {
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.style.display = 'none';
+    }
+
+    function openCamera() {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(s => {
+                stream = s;
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.autoplay = true;
+                document.body.appendChild(video);
+
+                // Add "Take Picture" button inside the camera
+                const takePictureButton = document.createElement('button');
+                takePictureButton.className = 'option-button';
+                takePictureButton.textContent = 'Take Picture';
+                takePictureButton.onclick = takePicture;
+                document.body.appendChild(takePictureButton);
+            })
+            .catch(error => {
+                console.error('Error accessing camera:', error);
+            });
+
+        hideOptions();
+    }
+
+    function takePicture() {
+        const video = document.querySelector('video');
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageUrl = canvas.toDataURL('image/png');
+        document.querySelector('.profile-image').style.backgroundImage = `url(${imageUrl})`;
+
+        // Stop the camera stream
+        stream.getTracks().forEach(track => track.stop());
+
+        // Remove the video and "Take Picture" button after taking the picture
+        document.body.removeChild(video);
+        document.body.removeChild(this);
+
+        hideOptions();
+    }
+
+    function chooseFromLibrary() {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+                    document.querySelector('.profile-image').style.backgroundImage = `url(${imageUrl})`;
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+
+        fileInput.click();
+        hideOptions();
+    }
+
+    function removePicture() {
+        const profileImage = document.querySelector('.profile-image');
+        profileImage.style.backgroundImage = 'none';
+        hideOptions();
+    }
+      function savePreferences() {
+        // Hide the preference options
+        document.querySelector('.preference-options').style.display = 'none';
+
+        // Display success message
+        const successMessage = document.getElementById('success-message');
+        successMessage.textContent = 'Your preferences have been saved!';
+    }
+
+      function signOut() {
+        // Create the loader container with the specified styles
+        const loaderContainer = document.createElement('div');
+        loaderContainer.className = 'loader-container';
+        loaderContainer.innerHTML = `
+          <section>
+        <div class="loader">
+            <span style="--i:1;"></span>
+            <span style="--i:2;"></span>
+            <span style="--i:3;"></span>
+            <span style="--i:4;"></span>
+            <span style="--i:5;"></span>
+            <span style="--i:6;"></span>
+            <span style="--i:7;"></span>
+            <span style="--i:8;"></span>
+            <span style="--i:9;"></span>
+            <span style="--i:10;"></span>
+            <span style="--i:11;"></span>
+            <span style="--i:12;"></span>
+            <span style="--i:13;"></span>
+            <span style="--i:14;"></span>
+            <span style="--i:15;"></span>
+            <span style="--i:16;"></span>
+            <span style="--i:17;"></span>
+            <span style="--i:18;"></span>
+            <span style="--i:19;"></span>
+            <span style="--i:20;"></span>
+        </div>
+    </section>
+        `;
+        document.body.appendChild(loaderContainer);
+
+        // Set a timeout to hide the loader and redirect after 3 seconds
+        setTimeout(function () {
+            // Remove the loader
+            document.body.removeChild(loaderContainer);
+
+            // Redirect to index.html
+            window.location.href = 'index2.html';
+        }, 3000);
+    }
+        function toggleOption(button) {
+        button.classList.toggle('selected');
+    }
+
+    // Add an event listener to close the options list on clicking anywhere else
+  
+</script>
+
+</body>
+</html>

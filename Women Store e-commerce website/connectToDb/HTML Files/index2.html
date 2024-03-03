@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>para  ella Official Site</title>
+    <link rel="icon" type="images/x-icon" href="images/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://kit.fontawesome.com/e1617174e4.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+        }
+
+        nav {
+            width: 100%;
+            background: white;
+            height: 80px;
+            position: fixed;
+            z-index: 3;
+            margin-top: 0%;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            float: right;
+            margin-bottom: auto;
+            font-size: 20px;
+        }
+
+        a:hover {
+            background:white;
+        }
+
+        ul li ul {
+            background: white;
+        }
+
+        ul li ul li {
+            float: none;
+        }
+
+        ul li ul {
+            display: none;
+        }
+
+        ul li:hover ul {
+            display: block;
+            position: fixed;
+            z-index: 1000;
+        }
+
+        .logo img {
+            position: fixed;
+            margin-top: 0%;
+            width: 10%;
+            z-index: 4;
+        }
+
+        nav a {
+            width: 100px;
+            display: block;
+            padding: 5px;
+            text-decoration: none;
+         
+            text-align: center;
+         
+            color:black;
+        }
+
+        div {
+            width: 100%;
+            margin: auto;
+        }
+
+        .search-box {
+            margin-right: auto; /* Pushes it to the right */
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            padding: 15px;
+            border: none;
+            font-size: 16px;
+            background-color: white; /* Gold color */
+            color: black;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 5px;
+            background-color:white;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px; /* Adjust the spacing */
+
+        }
+         .top-note {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px;
+          
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+        }
+        .contact img{
+            width: 30px;
+            height: 30px;
+        }
+        .search img{
+            width: 30px;
+            height: 30px;
+        }
+         .shopcart img{
+            width: 30px;
+            height: 30px;
+              margin-top: 2px;
+        }
+          .wishlist img{
+            width: 30px;
+            height: 30px;
+              margin-top: 1px;
+        }
+        .service img{
+            width: 30px;
+            height: 30px;
+               margin-top: -2px;
+        }
+        .cur img{
+            width: 40px;
+            height: 40px;
+            margin-top: -5px;
+        }
+        .contact ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 2px; /* Set the font size for the dropdown items */
+    font-family: 'Arial', sans-serif; /* Set a different font style */
+}
+
+.contact ul li {
+    float: none;
+}
+
+.contact ul li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black; /* Set the default text color */
+    font-size: 15px;
+}
+
+.contact ul li a:hover {
+    background: gray; /* Set the background color on hover */
+    color: white; /* Set the text color on hover */
+}
+      .second-nav {
+            width: 100%;
+            background: white;
+            height: 40px;
+            position: fixed;
+            z-index: 2;
+            top: 110px; /* Adjust this top value to leave space for the first navigation bar */
+        }
+
+        .second-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: space-around; /* Align items evenly across the width */
+        }
+
+        .second-nav li {
+            font-size: 14.5px;
+        }
+
+        .second-nav li a {
+            width: 200PX;
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+            display: block;
+        }
+
+   
+        .second-nav li:hover ul {
+            display: block;
+          
+        }
+
+        .second-nav li ul {
+            background: white;
+            display: none;
+            position: absolute;
+            z-index: 1000;
+        }
+            
+        .second-nav li ul li {
+            float: none;
+            background: none; /* Remove the background color */
+        }
+
+        .second-nav li ul li:hover {
+            background: gray;
+            color: white; /* Set text color to white on hover */
+        }
+        .second-nav ul li ul li a:hover{
+            background: gray;
+            color: white;
+        }
+        .second-nav ul li a:hover{
+            color: white;
+            background: gray;
+        }
+        body {
+    margin: 0;
+    padding: 0;
+    background: #f8f8f8; /* Set a light gray background color */
+    font-family: 'Arial', sans-serif; /* Set a default font family */
+}
+    </style>
+</head>
+<body>
+ <div class="top-note">
+      FREE SHIPPING ON ALL ORDERS
+    </div>
+    <div class="logo"><a href="index2.html"><img src="logo.gif" alt="logo" width="130px" height="100px"></a></div>
+    <nav>
+        <ul>
+             <li>
+                <div class="cur"><a href="#"><img src="currency.jpeg"></a></div>
+            </li>
+            <li>
+                <div class="service"><a href="rating.html"><img src="service.png"></a></div>
+            </li>
+            <li>
+                <div class="shopcart"><a href="#"><img src="shopping-cart.png"></a></div>
+            </li>
+            <li>
+                <div class="wishlist"><a href="#"><img src="wishlist.png"></a></div>
+            </li>
+           
+             
+             <li>
+                <div class="contact"><a href="#"><img src="contact.jpeg"></a>
+                <ul>
+                    <li><a href="loginsignup.html">Sign Up/Login</a></li>
+                    <li><a href="MyProfile.html">MyProfile</a></li>
+                </ul>
+            </div>
+            </li>
+              <li>
+                <div class="search-box">
+                    <input type="text" placeholder="Search...">
+                    <button>
+                        <div class="search"><img src="search.png"></div>
+                    </button>
+                </div>
+            </li>
+           
+        </ul>
+    </nav>
+      <nav class="second-nav">
+        <ul>
+            <li>
+               <a href="#">Women Clothing</a>
+                <!-- Dropdown for Women Clothing -->
+                <ul>
+                    <li><a href="pants.html">Pants</a></li>
+                    <li><a href="shirts.html">Shirts</a></li>
+                  
+                </ul>
+            </li>
+            <li><a href="shoes.html">Women Shoes</a></li>
+            <li><a href="jewerly.html">Women Jewelry & Accessories</a></li>
+            <li><a href="kitchen.html">Home & Kitchen</a></li>
+            <li><a href="beauty.html">Beauty & Health</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

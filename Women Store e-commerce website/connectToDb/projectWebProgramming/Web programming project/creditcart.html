@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <style>
+        .truck-button {
+  --color: #fff;
+  --background: #2B3044;
+  --tick: #16BF78;
+  --base: #0D0F18;
+  --wheel: #2B3044;
+  --wheel-inner: #646B8C;
+  --wheel-dot: #fff;
+  --back: #6D58FF;
+  --back-inner: #362A89;
+  --back-inner-shadow: #2D246B;
+  --front: #A6ACCD;
+  --front-shadow: #535A79;
+  --front-light: #FFF8B1;
+  --window: #2B3044;
+  --window-shadow: #404660;
+  --street: #646B8C;
+  --street-fill: #404660;
+  --box: #DCB97A;
+  --box-shadow: #B89B66;
+  padding: 12px 0;
+  width: 172px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  border: none;
+  outline: none;
+  color: var(--color);
+  background: var(--background);
+  border-radius: var(--br, 5px);
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) translateZ(0);
+  transition: transform 0.5s, border-radius 0.3s linear var(--br-d, 0s);
+}
+.truck-button:before, .truck-button:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 6px;
+  display: block;
+  background: var(--b, var(--street));
+  transform-origin: 0 100%;
+  transform: rotateX(90deg) scaleX(var(--sy, 1));
+}
+.truck-button:after {
+  --sy: var(--progress, 0);
+  --b: var(--street-fill);
+}
+.truck-button .default,
+.truck-button .success {
+  display: block;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  opacity: var(--o, 1);
+  transition: opacity 0.3s;
+}
+.truck-button .success {
+  --o: 0;
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+}
+.truck-button .success svg {
+  width: 12px;
+  height: 10px;
+  display: inline-block;
+  vertical-align: top;
+  fill: none;
+  margin: 7px 0 0 4px;
+  stroke: var(--tick);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 16px;
+  stroke-dashoffset: var(--offset, 16px);
+  transition: stroke-dashoffset 0.4s ease 0.45s;
+}
+.truck-button .truck {
+  position: absolute;
+  width: 72px;
+  height: 28px;
+  transform: rotateX(90deg) translate3d(var(--truck-x, 4px), calc(var(--truck-y-n, -26) * 1px), 12px);
+}
+.truck-button .truck:before, .truck-button .truck:after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: var(--l, 18px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: inset 0 0 0 2px var(--wheel), inset 0 0 0 4px var(--wheel-inner);
+  background: var(--wheel-dot);
+  transform: translateY(calc(var(--truck-y) * -1px)) translateZ(0);
+}
+.truck-button .truck:after {
+  --l: 54px;
+}
+.truck-button .truck .wheel,
+.truck-button .truck .wheel:before {
+  position: absolute;
+  bottom: var(--b, -6px);
+  left: var(--l, 6px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--wheel);
+  transform: translateZ(0);
+}
+.truck-button .truck .wheel {
+  transform: translateY(calc(var(--truck-y) * -1px)) translateZ(0);
+}
+.truck-button .truck .wheel:before {
+  --l: 35px;
+  --b: 0;
+  content: "";
+}
+.truck-button .truck .front,
+.truck-button .truck .back,
+.truck-button .truck .box {
+  position: absolute;
+}
+.truck-button .truck .back {
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 47px;
+  height: 28px;
+  border-radius: 1px 1px 0 0;
+  background: linear-gradient(68deg, var(--back-inner) 0%, var(--back-inner) 22%, var(--back-inner-shadow) 22.1%, var(--back-inner-shadow) 100%);
+}
+.truck-button .truck .back:before, .truck-button .truck .back:after {
+  content: "";
+  position: absolute;
+}
+.truck-button .truck .back:before {
+  left: 11px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  border-radius: 0 1px 0 0;
+  background: var(--back);
+}
+.truck-button .truck .back:after {
+  border-radius: 1px;
+  width: 73px;
+  height: 2px;
+  left: -1px;
+  bottom: -2px;
+  background: var(--base);
+}
+.truck-button .truck .front {
+  left: 47px;
+  bottom: -1px;
+  height: 22px;
+  width: 24px;
+  -webkit-clip-path: polygon(55% 0, 72% 44%, 100% 58%, 100% 100%, 0 100%, 0 0);
+  clip-path: polygon(55% 0, 72% 44%, 100% 58%, 100% 100%, 0 100%, 0 0);
+  background: linear-gradient(84deg, var(--front-shadow) 0%, var(--front-shadow) 10%, var(--front) 12%, var(--front) 100%);
+}
+.truck-button .truck .front:before, .truck-button .truck .front:after {
+  content: "";
+  position: absolute;
+}
+.truck-button .truck .front:before {
+  width: 7px;
+  height: 8px;
+  background: #fff;
+  left: 7px;
+  top: 2px;
+  -webkit-clip-path: polygon(0 0, 60% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(0 0, 60% 0%, 100% 100%, 0% 100%);
+  background: linear-gradient(59deg, var(--window) 0%, var(--window) 57%, var(--window-shadow) 55%, var(--window-shadow) 100%);
+}
+.truck-button .truck .front:after {
+  width: 3px;
+  height: 2px;
+  right: 0;
+  bottom: 3px;
+  background: var(--front-light);
+}
+.truck-button .truck .box {
+  width: 13px;
+  height: 13px;
+  right: 56px;
+  bottom: 0;
+  z-index: 1;
+  border-radius: 1px;
+  overflow: hidden;
+  transform: translate(calc(var(--box-x, -24) * 1px), calc(var(--box-y, -6) * 1px)) scale(var(--box-s, 0.5));
+  opacity: var(--box-o, 0);
+  background: linear-gradient(68deg, var(--box) 0%, var(--box) 50%, var(--box-shadow) 50.2%, var(--box-shadow) 100%);
+  background-size: 250% 100%;
+  background-position-x: calc(var(--bx, 0) * 1%);
+}
+.truck-button .truck .box:before, .truck-button .truck .box:after {
+  content: "";
+  position: absolute;
+}
+.truck-button .truck .box:before {
+  content: "";
+  background: rgba(255, 255, 255, 0.2);
+  left: 0;
+  right: 0;
+  top: 6px;
+  height: 1px;
+}
+.truck-button .truck .box:after {
+  width: 6px;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  background: var(--back);
+  transform: translateX(calc(var(--hx, 0) * 1px));
+}
+.truck-button.animation {
+  --rx: -90deg;
+  --br: 0;
+}
+.truck-button.animation .default {
+  --o: 0;
+}
+.truck-button.animation.done {
+  --rx: 0deg;
+  --br: 5px;
+  --br-d: .2s;
+}
+.truck-button.animation.done .success {
+  --o: 1;
+  --offset: 0;
+}
+
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: inherit;
+}
+*:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  font-family: "Inter UI", "Inter", Arial;
+  justify-content: center;
+  align-items: center;
+  background: #2f2f2f;
+}
+body .dribbble {
+  position: fixed;
+  display: block;
+  right: 20px;
+  bottom: 20px;
+}
+body .dribbble img {
+  display: block;
+  height: 28px;
+}
+body .twitter {
+  position: fixed;
+  display: block;
+  right: 64px;
+  bottom: 14px;
+}
+body .twitter svg {
+  width: 32px;
+  height: 32px;
+  fill: #1da1f2;
+}
+   h1 {
+        font-style: italic;
+        font-weight: bold;
+        font-family: 'Times New Roman', serif; /* Change the font family as needed */
+        color: #b8860b; /* Darker gold color */
+        text-shadow: 2px 2px 4px black; /* Add a shadow effect */
+        animation: glow 1s ease-in-out infinite alternate; /* Add a glow animation */
+    }
+     @keyframes glow {
+        from {
+            text-shadow: 2px 2px 4px black;
+        }
+
+        to {
+            text-shadow: 0 0 10px #b8860b; /* Darker gold color */
+        }
+    }
+    .field-container {
+
+        font-weight: bold;
+        font-family: 'Times New Roman', serif; /* Change the font family as needed */
+        color: #b8860b; /* Darker gold color */
+ /* Add a shadow effect */
+   
+    }
+    </style>
+    <link rel="stylesheet" type="text/css" href="creditcartstyle.css">
+     <link rel="stylesheet" type="text/css" href="orderstyle.css">
+     <script src="scriptcredit.js"></script>
+  <meta charset="UTF-8">
+  <title>Credit Card Payment Form</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway|Rock+Salt|Source+Code+Pro:300,400,600" rel="stylesheet"><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="payment-title">
+        <h1>Payment Information</h1>
+    </div>
+    <div class="container preload">
+        <div class="creditcard">
+            <div class="front">
+                <div id="ccsingle"></div>
+                <svg version="1.1" id="cardfront" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+                    <g id="Front">
+                        <g id="CardBackground">
+                            <g id="Page-1_1_">
+                                <g id="amex_1_">
+                                    <path id="Rectangle-1_1_" class="lightcolor grey" d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40
+                            C0,17.9,17.9,0,40,0z" />
+                                </g>
+                            </g>
+                            <path class="darkcolor greydark" d="M750,431V193.2c-217.6-57.5-556.4-13.5-750,24.9V431c0,22.1,17.9,40,40,40h670C732.1,471,750,453.1,750,431z" />
+                        </g>
+                        <text transform="matrix(1 0 0 1 60.106 295.0121)" id="svgnumber" class="st2 st3 st4">0123 4567 8910 1112</text>
+                        <text transform="matrix(1 0 0 1 54.1064 428.1723)" id="svgname" class="st2 st5 st6">JOHN DOE</text>
+                        <text transform="matrix(1 0 0 1 54.1074 389.8793)" class="st7 st5 st8">cardholder name</text>
+                        <text transform="matrix(1 0 0 1 479.7754 388.8793)" class="st7 st5 st8">expiration</text>
+                        <text transform="matrix(1 0 0 1 65.1054 241.5)" class="st7 st5 st8">card number</text>
+                        <g>
+                            <text transform="matrix(1 0 0 1 574.4219 433.8095)" id="svgexpire" class="st2 st5 st9">01/23</text>
+                            <text transform="matrix(1 0 0 1 479.3848 417.0097)" class="st2 st10 st11">VALID</text>
+                            <text transform="matrix(1 0 0 1 479.3848 435.6762)" class="st2 st10 st11">THRU</text>
+                            <polygon class="st2" points="554.5,421 540.4,414.2 540.4,427.9 		" />
+                        </g>
+                        <g id="cchip">
+                            <g>
+                                <path class="st2" d="M168.1,143.6H82.9c-10.2,0-18.5-8.3-18.5-18.5V74.9c0-10.2,8.3-18.5,18.5-18.5h85.3
+                        c10.2,0,18.5,8.3,18.5,18.5v50.2C186.6,135.3,178.3,143.6,168.1,143.6z" />
+                            </g>
+                            <g>
+                                <g>
+                                    <rect x="82" y="70" class="st12" width="1.5" height="60" />
+                                </g>
+                                <g>
+                                    <rect x="167.4" y="70" class="st12" width="1.5" height="60" />
+                                </g>
+                                <g>
+                                    <path class="st12" d="M125.5,130.8c-10.2,0-18.5-8.3-18.5-18.5c0-4.6,1.7-8.9,4.7-12.3c-3-3.4-4.7-7.7-4.7-12.3
+                            c0-10.2,8.3-18.5,18.5-18.5s18.5,8.3,18.5,18.5c0,4.6-1.7,8.9-4.7,12.3c3,3.4,4.7,7.7,4.7,12.3
+                            C143.9,122.5,135.7,130.8,125.5,130.8z M125.5,70.8c-9.3,0-16.9,7.6-16.9,16.9c0,4.4,1.7,8.6,4.8,11.8l0.5,0.5l-0.5,0.5
+                            c-3.1,3.2-4.8,7.4-4.8,11.8c0,9.3,7.6,16.9,16.9,16.9s16.9-7.6,16.9-16.9c0-4.4-1.7-8.6-4.8-11.8l-0.5-0.5l0.5-0.5
+                            c3.1-3.2,4.8-7.4,4.8-11.8C142.4,78.4,134.8,70.8,125.5,70.8z" />
+                                </g>
+                                <g>
+                                    <rect x="82.8" y="82.1" class="st12" width="25.8" height="1.5" />
+                                </g>
+                                <g>
+                                    <rect x="82.8" y="117.9" class="st12" width="26.1" height="1.5" />
+                                </g>
+                                <g>
+                                    <rect x="142.4" y="82.1" class="st12" width="25.8" height="1.5" />
+                                </g>
+                                <g>
+                                    <rect x="142" y="117.9" class="st12" width="26.2" height="1.5" />
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="Back">
+                    </g>
+                </svg>
+            </div>
+            <div class="back">
+                <svg version="1.1" id="cardback" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+                    <g id="Front">
+                        <line class="st0" x1="35.3" y1="10.4" x2="36.7" y2="11" />
+                    </g>
+                    <g id="Back">
+                        <g id="Page-1_2_">
+                            <g id="amex_2_">
+                                <path id="Rectangle-1_2_" class="darkcolor greydark" d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40
+                        C0,17.9,17.9,0,40,0z" />
+                            </g>
+                        </g>
+                        <rect y="61.6" class="st2" width="750" height="78" />
+                        <g>
+                            <path class="st3" d="M701.1,249.1H48.9c-3.3,0-6-2.7-6-6v-52.5c0-3.3,2.7-6,6-6h652.1c3.3,0,6,2.7,6,6v52.5
+                    C707.1,246.4,704.4,249.1,701.1,249.1z" />
+                            <rect x="42.9" y="198.6" class="st4" width="664.1" height="10.5" />
+                            <rect x="42.9" y="224.5" class="st4" width="664.1" height="10.5" />
+                            <path class="st5" d="M701.1,184.6H618h-8h-10v64.5h10h8h83.1c3.3,0,6-2.7,6-6v-52.5C707.1,187.3,704.4,184.6,701.1,184.6z" />
+                        </g>
+                        <text transform="matrix(1 0 0 1 621.999 227.2734)" id="svgsecurity" class="st6 st7">985</text>
+                        <g class="st8">
+                            <text transform="matrix(1 0 0 1 518.083 280.0879)" class="st9 st6 st10">security code</text>
+                        </g>
+                        <rect x="58.1" y="378.6" class="st11" width="375.5" height="13.5" />
+                        <rect x="58.1" y="405.6" class="st11" width="421.7" height="13.5" />
+                        <text transform="matrix(1 0 0 1 59.5073 228.6099)" id="svgnameback" class="st12 st13">John Doe</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="form-container">
+        <div class="field-container">
+            <label for="name">Name</label>
+            <input id="name" maxlength="20" type="text">
+        </div>
+        <div class="field-container">
+            <label for="cardnumber">Card Number</label><span id="generatecard">generate random</span>
+            <input id="cardnumber" type="text" pattern="[0-9]*" inputmode="numeric">
+            <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+
+            </svg>
+        </div>
+        <div class="field-container">
+            <label for="expirationdate">Expiration (mm/yy)</label>
+            <input id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric">
+        </div>
+        <div class="field-container">
+            <label for="securitycode">Security Code</label>
+            <input id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
+        </div>
+    </div>
+    <button class="truck-button">
+    <span class="default">Complete Order</span>
+    <span class="success">
+        Order Placed
+        <svg viewbox="0 0 12 10">
+            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+        </svg>
+    </span>
+    <div class="truck">
+        <div class="wheel"></div>
+        <div class="back"></div>
+        <div class="front"></div>
+        <div class="box"></div>
+    </div>
+</button>
+
+<!-- dribbble - twitter -->
+<a class="dribbble" href="https://dribbble.com/shots/9552163-Complete-order-button" target="_blank"><img src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg" alt=""></a>
+<a class="twitter" target="_blank" href="https://twitter.com/aaroniker_me"><svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><path d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z"></path></svg></a>
+<!-- partial -->
+  <script src='https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js'></script><script  src="./script.js"></script>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js'></script><script  src="./script.js"></script>
+<script>
+    document.querySelectorAll('.truck-button').forEach(button => {
+    button.addEventListener('click', e => {
+
+        e.preventDefault();
+        
+        let box = button.querySelector('.box'),
+            truck = button.querySelector('.truck');
+        
+        if(!button.classList.contains('done')) {
+            
+            if(!button.classList.contains('animation')) {
+
+                button.classList.add('animation');
+
+                gsap.to(button, {
+                    '--box-s': 1,
+                    '--box-o': 1,
+                    duration: .3,
+                    delay: .5
+                });
+
+                gsap.to(box, {
+                    x: 0,
+                    duration: .4,
+                    delay: .7
+                });
+
+                gsap.to(button, {
+                    '--hx': -5,
+                    '--bx': 50,
+                    duration: .18,
+                    delay: .92
+                });
+
+                gsap.to(box, {
+                    y: 0,
+                    duration: .1,
+                    delay: 1.15
+                });
+
+                gsap.set(button, {
+                    '--truck-y': 0,
+                    '--truck-y-n': -26
+                });
+
+                gsap.to(button, {
+                    '--truck-y': 1,
+                    '--truck-y-n': -25,
+                    duration: .2,
+                    delay: 1.25,
+                    onComplete() {
+                        gsap.timeline({
+                            onComplete() {
+                                button.classList.add('done');
+                            }
+                        }).to(truck, {
+                            x: 0,
+                            duration: .4
+                        }).to(truck, {
+                            x: 40,
+                            duration: 1
+                        }).to(truck, {
+                            x: 20,
+                            duration: .6
+                        }).to(truck, {
+                            x: 96,
+                            duration: .4
+                        });
+                        gsap.to(button, {
+                            '--progress': 1,
+                            duration: 2.4,
+                            ease: "power2.in"
+                        });
+                    }
+                });
+                
+            }
+            
+        } else {
+            button.classList.remove('animation', 'done');
+            gsap.set(truck, {
+                x: 4
+            });
+            gsap.set(button, {
+                '--progress': 0,
+                '--hx': 0,
+                '--bx': 0,
+                '--box-s': .5,
+                '--box-o': 0,
+                '--truck-y': 0,
+                '--truck-y-n': -26
+            });
+            gsap.set(box, {
+                x: -24,
+                y: -6
+            });
+        }
+
+    });
+});
+</script>
+</body>
+</html>

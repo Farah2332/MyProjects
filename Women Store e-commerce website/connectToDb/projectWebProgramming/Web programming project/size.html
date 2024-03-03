@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Product Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .product {
+            text-align: center;
+            width: 300px;
+            margin: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .modal label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .modal button {
+            display: inline-block;
+            padding: 8px 15px;
+            margin-right: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .modal button.close {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<div class="product-container">
+    
+        <button onclick="showSizeModal()">Add to Cart</button>
+    
+</div>
+
+<div id="sizeModal" class="modal">
+    <label>Please choose a size:</label>
+    <button onclick="addToCart('S')">S</button>
+    <button onclick="addToCart('M')">M</button>
+    <button onclick="addToCart('L')">L</button>
+    <button onclick="addToCart('XL')">XL</button>
+    <button class="close" onclick="closeSizeModal()">Close</button>
+</div>
+
+<script>
+    function showSizeModal() {
+        document.getElementById('sizeModal').style.display = 'block';
+    }
+
+    function addToCart(size) {
+        if (size) {
+            // Perform actions to add the product with the selected size to the cart
+            alert('Added to cart. Size: ' + size);
+            closeSizeModal();
+        } else {
+            alert('Please choose a size.');
+        }
+    }
+
+    function closeSizeModal() {
+        document.getElementById('sizeModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

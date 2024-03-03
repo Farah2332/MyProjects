@@ -1,0 +1,17 @@
+{
+  "name": "project-web-programming",
+  "version": "0.0.0",
+  "description": "projectWebProgramming",
+  "scripts": {
+    "start": "node server"
+  },
+  "author": {
+    "name": ""
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.14"
+  },
+  "engines": {
+    "node": "^8.0.0"
+  }
+}

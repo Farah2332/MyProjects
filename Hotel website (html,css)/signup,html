@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>  Sign up page </title>
+
+	  <link rel="stylesheet" type="text/css" href="style.css">
+	    <link rel="stylesheet" type="text/css" href="cal.css">
+
+	  <style>
+	  	body{
+	  		background-color: #F5DEB3;
+	  	}
+mark{
+	background-color: #F5DEB3;
+
+}
+.map{
+	width: 45%;
+	height: 30em;
+	margin-top:0em;
+	text-align: center;
+
+	border-radius: 3em;
+	margin-right: 5%;
+
+	position:relative;
+}
+
+.form{
+	right: 1em;
+	top:16.5em;
+	width: 45%;
+	text-align: center;
+	height: 40em;
+	border-radius: 3em;
+	background-color: #F5DEB3;
+	color: white;
+	margin-left: 0%;
+	margin-top: -27%;
+}
+.form h1{
+	color:#aa381e;
+}
+.text{
+  width: 90%;
+  height: 3em;
+  color: #000;
+  border: 0.1em solid #aa381e;
+  border-radius: 2em;
+  padding: 0.5em;
+	margin-bottom: 1em;
+}
+.textarea
+{
+  width: 90%;
+  height: 10em;
+  color: #000;
+  border: 0.1em solid #aa381e;
+  border-radius: 1em;
+  margin-bottom: 1em;
+  padding: 0.5em;
+}
+.submitbutton
+{
+  width: 90%;
+  border-radius: 2em;
+  background: #fff;
+  padding: 0.4em 0;
+  cursor: pointer;
+   color: #000;
+  border: 0.1em solid #aa381e;
+}
+	#footer {
+	font-size: 0.85em;
+	position: relative;
+	width: 100%; 
+	height: 150px;
+	background-color: #aa381e;
+	color: #F5DEB3;
+	text-align: center;
+	padding: 2em 0; /* mn jouwa */
+		margin-top: 25%;
+		margin-left: 0%;
+		margin-right: 0%;
+		margin-bottom: 0%;
+		padding: 0%;
+		opacity: 170%;
+		padding-top: 2%;
+		padding-bottom: -1%;
+
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+
+#footer a{
+	color: #271DFF;
+}
+@media only screen and (max-width: 1000px){
+	body{
+		font-size: 17px;
+	}	
+}
+@media only screen and (max-width: 850px){
+	body{
+		font-size: 15px;
+	}	
+}
+@media only screen and (max-width: 750px){
+	body{
+		font-size: 13px;
+	}	
+}
+@media only screen and (max-width: 650px){
+	body{font-size: 11px;}
+	.header{
+		min-height: 15vh;
+		width: 100%;
+	}
+	nav{
+		width: 100%;
+		height: 30%;
+	}
+	
+	
+	.form{position: absolute;
+	right: 5em;
+	top:45em;
+		width: 70%;
+	}
+	.form .input #phone{
+		margin-top: -20%;
+	}
+	.text{
+  height: 2em;
+}
+#footer {
+	font-size: 0.85em;
+	position: relative;
+	width: 100%; 
+	height: 150px;
+	background-color: #aa381e;
+	color: #F5DEB3;
+	text-align: center;
+	padding: 2em 0; /* mn jouwa */
+		margin-top: 220%;
+		margin-left: 0%;
+		margin-right: 0%;
+		margin-bottom: 0%;
+		padding: 0%;
+		opacity: 110%;
+		padding-top: 2%;
+		padding-bottom: -1%;
+
+}
+.map{
+	display: none;
+}
+ @media only screen and (max-width: 500px) {
+ 		nav{
+			width: 100%;
+			background: #aa381e;
+			height: 80px;
+			position: fixed;
+			z-index: 3;
+			margin-top: 0%;
+
+		
+		}
+	 .form {
+		margin-top: -90%;
+			margin-left: 10%;
+		}
+		div  h1{
+			display: none;
+		}
+
+ 	}
+
+
+
+  	
+
+  	
+	  </style>
+
+
+</head>
+<body>
+
+		
+
+<br>
+<br>
+
+
+      <br>
+      <br>
+	<div class="form">
+        <h1>Sign in</h1>
+        <br>
+        <br>
+        <br>
+        <form>
+          <input type="text" placeholder="First Name" class="text" />
+           <input type="text" placeholder="Last Name" class="text" />
+           <br>
+           <br>
+           <br>
+
+           <p style="color: #aa381e;font-size: 23px;margin-left: 7%;"><b>Choose the type of the room:</b></p>
+           <br>
+           <br>
+           
+                 <input type="radio" name="room"value="single room"  > <p style="font-size:17px;color: #aa381e;margin-top: -2.5%;margin-left: 17%;">Single room</p>
+                 <br>
+
+      <input type="radio" name="room" value="double room" > <p style="font-size:17px;color: #aa381e;margin-top: -2.5%;margin-left: 17%;"> Double room</p>
+      <br>
+      <input type="radio" name="room" value="VIP room" > <p style="color: #aa381e;margin-top: -2.5%;margin-left: 17%;font-size: 17px">VIP room</p><br>
+ <br>
+ <br>
+ <br>
+      <p style="color: #aa381e;font-size: 23px;margin-left: -45%;"><b>Choose the day of reservation:</b></p>
+
+  <div class="container">
+ 
+  
+ 
+  </div>
+  <br>
+  <br>
+  <br>
+   <br>
+  <br>
+  <br>
+   <br>
+  <br>
+  <br>
+   <br>
+  <br>
+  <br>
+   <br>
+  <br>
+  <br>
+   <br>
+  <br>
+  <br>
+   <br>
+  <br>
+  <br>
+   <br>
+  <br>
+  <br>
+   <br>
+  <br>
+  <br>
+   <br>
+   <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+          <label for="phone"><p style="color: #aa381e;font-size: 23px;margin-left: -45%;"><b>Enter your phone number:</b></p></label><br>
+          <br>
+<input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"><br>
+<br>
+<br>
+<br>
+
+<p style="color: #aa381e;font-size: 23px;margin-left: -45%;"><b>Enter your Email address:</b></p>
+<br>
+<br>
+                   <input type="text" placeholder="Email" class="text" />
+          <textarea placeholder="Message or Feedback" class="textarea"></textarea>
+          <input type="submit" name="Submit" class="submitbutton" />
+        </form>
+      </div>
+      <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+	
+		</div>
+
+</body>

@@ -1,0 +1,217 @@
+<!-- wishlist.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    
+
+        #clearWishlist {
+            background-color:#E4BB40;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            margin-left: 1370px;
+        }
+          body {
+        margin: 0;
+        padding: 0;
+        background: white;
+        font-family: Arial, sans-serif;
+    }
+
+    #wishlist-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .wishlist-product {
+        text-align: center;
+        width: calc(25% - 20px); /* Adjust as needed */
+        margin: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+        position: relative; /* Position relative for absolute positioning */
+    }
+
+    .wishlist-product img {
+        width: 60%;
+        height: auto;
+    }
+
+    .wishlist-description {
+        color: black;
+        margin-top: 10px;
+    }
+
+    .wishlist-price {
+        color: orange;
+        margin-top: 5px;
+    }
+
+    .delete-button {
+        background-color: #E4BB40;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 3px;
+        font-size: 12px;
+        position: absolute;
+        bottom: -13px; /* Adjusted to be at the bottom */
+        left: 51%;
+        transform: translateX(-50%);
+        margin-top: 12px;
+    }
+   h1 {
+        font-style: italic;
+        font-weight: bold;
+        font-family: 'Times New Roman', serif; /* Change the font family as needed */
+        color: #b8860b; /* Darker gold color */
+        text-shadow: 2px 2px 4px black; /* Add a shadow effect */
+        animation: glow 1s ease-in-out infinite alternate; /* Add a glow animation */
+    }
+
+    @keyframes glow {
+        from {
+            text-shadow: 2px 2px 4px black;
+        }
+
+        to {
+            text-shadow: 0 0 10px #b8860b; /* Darker gold color */
+        }
+    }
+    </style>
+    <!-- Add your head content here -->
+</head>
+<body>
+    <h1>Your wishlist!</h1>
+      
+ <div id="wishlist-container">
+        <!-- Wishlist products will be dynamically added here -->
+    </div>
+
+</body>
+<!-- At the end of the <body> section of wishlist.html -->
+<script>
+ document.addEventListener('DOMContentLoaded', function () {
+    var wishlistContainer = document.getElementById('wishlist-container');
+
+    fetch('/wishlist')  // Use the correct endpoint for fetching wishlist
+        .then(response => response.json())
+        .then(data => {
+            data.wishlist.forEach(function (productDetails) {
+                var productContainer = createProductContainer(productDetails);
+                wishlistContainer.appendChild(productContainer);
+            });
+        })
+        .catch(error => console.error('Error fetching wishlist:', error));
+
+    function createProductContainer(productDetails) {
+        var productContainer = document.createElement('div');
+        productContainer.className = 'wishlist-product';
+
+        // Create and append the product image with styles
+        var productImage = document.createElement('img');
+        productImage.className = 'wishlist-image product1';  // Added 'product1' class
+        productImage.src = productDetails.product_picture;
+        productImage.alt = productDetails.product_desc;
+        productImage.style.height = 'auto';
+        productImage.style.borderRadius = '8px';
+        productImage.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+        productImage.style.transition = 'transform 0.3s ease-in-out';
+
+        // Add hover effect
+        productImage.addEventListener('mouseover', function () {
+            productImage.style.transform = 'scale(1.1)';
+        });
+
+        // Reset transform on mouseout
+        productImage.addEventListener('mouseout', function () {
+            productImage.style.transform = 'scale(1)';
+        });
+
+        // Append the image to the product container
+        productContainer.appendChild(productImage);
+
+        // Create and append other product details
+        var productDescription = document.createElement('div');
+        productDescription.className = 'wishlist-description';
+        productDescription.textContent = productDetails.product_desc;
+
+        var productPrice = document.createElement('div');
+        productPrice.className = 'wishlist-price';
+        productPrice.textContent = productDetails.product_prix;
+
+        var deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-button';
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = function () {
+            deleteProduct(productDetails.product_desc);
+        };
+
+        productContainer.appendChild(productDescription);
+        productContainer.appendChild(productPrice);
+        productContainer.appendChild(deleteButton);
+
+        return productContainer;
+    }
+
+   function deleteProduct(productdesc, productContainer) {
+    // Log the productdesc to ensure it's not undefined
+    console.log('Product Desc to delete:', productdesc);
+
+    // Send a request to the server to delete the product from the wishlist
+    fetch('/deleteFromWishlist', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin', // Include credentials (e.g., session) in the request
+        body: JSON.stringify({ productdesc }), // Ensure productdesc is defined
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Server response:', data); // Log the response for debugging
+        if (data.success) {
+            // Fetch the updated wishlist from the server
+            return fetch('/wishlist');
+        } else {
+            alert('Failed to delete product from your wishlist: ' + data.message);
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Clear the current wishlistContainer
+        wishlistContainer.innerHTML = '';
+
+        // Update the wishlistContainer with the updated wishlist
+        data.wishlist.forEach(function (productDetails) {
+            var productContainer = createProductContainer(productDetails);
+            wishlistContainer.appendChild(productContainer);
+        });
+
+        alert('Product deleted from your wishlist');
+    })
+    .catch((error) => {
+        console.error('Fetch error:', error);
+        alert('Failed to delete product from your wishlist. Please check the console for details.');
+    });
+}
+
+    
+});
+
+
+
+</script>
+
+</html>

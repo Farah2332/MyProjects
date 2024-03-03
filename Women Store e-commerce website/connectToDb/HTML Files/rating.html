@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Customer Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <style>
+        /* Import Google font - Poppins */
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .customer-service {
+            background-color: rgba(0, 0, 0, 0.4); /* Adjust the last value for opacity */
+
+            padding: 25px 50px 35px;
+            border-radius: 25px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .customer-service header {
+            font-size: 22px;
+            color: black;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .questions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .question {
+            width: 80%;
+            background: #f1f1f1;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .feedback-input {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .yes-no-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            margin-left: 130px;
+        }
+
+        .stars {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .stars i {
+            color:white;
+            font-size: 35px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .stars i.active {
+            color:#E4BB40;
+        }
+
+        #submit-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #E4BB40;
+            color:white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        p{
+            font-size: 30px;
+               font-family: 'Montserrat', sans-serif;
+        }
+           .animation-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="customer-service">
+        <header>Customer Service</header>
+        <div class="questions">
+            <div class="question">How can we assist you today?
+                <input type="text" class="feedback-input" placeholder="Type your feedback here...">
+            </div>
+            <div class="question">Do you have any feedback for us?
+                <input type="text" class="feedback-input" placeholder="Type your feedback here...">
+            </div>
+            <div class="question">Would you recommend our service to others?
+                <div class="yes-no-options">
+                    <label><input type="radio" name="recommendation" value="yes"> Yes</label>
+                    <label><input type="radio" name="recommendation" value="no"> No</label>
+                </div>
+            </div>
+            <div><p><b>Give us a rating!</b></p></div>
+          <div class="stars">
+            <i class="fas fa-star" onclick="setRating(1)"></i>
+            <i class="fas fa-star" onclick="setRating(2)"></i>
+            <i class="fas fa-star" onclick="setRating(3)"></i>
+            <i class="fas fa-star" onclick="setRating(4)"></i>
+            <i class="fas fa-star" onclick="setRating(5)"></i>
+        </div>
+            <button id="submit-button" onclick="submitFeedback()">Submit</button>
+
+        </div>
+    </div>
+    <script>
+        let selectedRating = 0;
+
+        const stars = document.querySelectorAll(".stars i");
+
+        function setRating(rating) {
+            selectedRating = rating;
+
+            stars.forEach((star, index) => {
+                index < rating ? star.classList.add("active") : star.classList.remove("active");
+            });
+        }
+
+        function submitFeedback() {
+            if (selectedRating === 0) {
+                alert('Please select a rating before submitting.');
+                return;
+            }
+
+            // Perform your database operation here
+            // You can use AJAX, fetch, or any other method to send the selected rating to your server-side script
+
+            // For demonstration purposes, alert the feedback message
+            alert('Appreciate your feedback!');
+
+            // You can replace the following line with your database operation
+            addToDatabase(selectedRating);
+        }
+
+        function getFeedbackText(rating) {
+            switch (rating) {
+                case 1:
+                    return 'Too Bad';
+                case 2:
+                    return 'Bad';
+                case 3:
+                    return 'Acceptable';
+                case 4:
+                    return 'Nice';
+                case 5:
+                    return 'Great';
+                default:
+                    return 'Unknown';
+            }
+        }
+
+    function addToDatabase(selectedRating) {
+    const feedbackText = getFeedbackText(selectedRating);
+
+       fetch('/update-rating', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            feedbackText: feedbackText, // Ensure consistency in the key
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update rating');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Rating submitted successfully:', data);
+
+        // Optionally, you can handle the response from the server here
+
+        // Clear the selected rating for the next use
+        selectedRating = 0;
+
+        // Clear the active class from stars
+        stars.forEach(star => star.classList.remove("active"));
+    })
+    .catch(error => {
+        console.error('Error updating rating:', error);
+
+        // Optionally, handle the error and display a message to the user
+        alert('Failed to submit rating. Please try again.' + error);
+    });
+}
+
+    </script>
+</body>
+</html>

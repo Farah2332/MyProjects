@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Profile</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+            padding: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #ccc;
+        }
+
+        .plus-overlay {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .plus-overlay:hover {
+            background: #e0e0e0;
+        }
+
+        .options-container {
+            display: none;
+            position: absolute;
+            top: -70px;
+            right: 5px;
+            background: white;
+            border-radius: 5px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+            z-index: 1;
+        }
+
+        .option-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .set-photo-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .choose-from-library-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+           .label, .user-name, .email-country-label, .preference-label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .preference-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .preference-option {
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #E4BB40;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .preference-option.selected {
+            background-color: #f8a25c;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+     
+        .success-message {
+            color: green;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .save-button, .sign-out-button {
+            background-color: #E4BB40;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+    .loader-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: animateBg 10s linear infinite;
+        z-index: 9999;
+    }
+
+    @keyframes animateBg {
+        0%
+        {
+            filter: hue-rotate(0deg);
+        }
+        100%
+        {
+            filter: hue-rotate(360deg);
+        }
+    }
+
+    .loader {
+        position: relative;
+        width: 100px;
+        height: 100px;
+    }
+
+    .loader span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(calc(18deg * var(--i)));
+        transition-timing-function: 2s;
+    }
+
+    .loader span::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: #00ff0a;
+        box-shadow: 0 0 10px #00ff0a,
+                    0 0 20px #00ff0a,
+                    0 0 40px #00ff0a,
+                    0 0 60px #00ff0a,
+                    0 0 80px #00ff0a,
+                    0 0 100px #00ff0a;
+        animation: animate 2s linear infinite;
+        animation-delay: calc(0.1s * var(--i));
+    }
+
+    @keyframes animate {
+        0%
+        {
+            transform: scale(1);
+        }
+        80%,100%
+        {
+            transform: scale(0);
+        }
+    }
+    .label{
+          font-style: italic;
+        font-weight: bold;
+        font-family: 'Times New Roman', serif; /* Change the font family as needed */
+        color: #b8860b; /* Darker gold color */
+        text-shadow: 2px 2px 4px black; /* Add a shadow effect */
+        animation: glow 1s ease-in-out infinite alternate;
+        font-size: 20px;
+    }
+      @keyframes glow {
+        from {
+            text-shadow: 2px 2px 4px black;
+        }
+
+        to {
+            text-shadow: 0 0 10px #b8860b; /* Darker gold color */
+        }
+    }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <h2>My Profile</h2>
+    
+    <div class="options-container" id="options-container">
+        <button class="option-button" onclick="openCamera()">Take photo</button>
+
+        <button class="choose-from-library-button" onclick="chooseFromLibrary()">Choose from library</button>
+        <button class="option-button" onclick="removePicture()">Remove current picture</button>
+    </div>
+
+    <div class="profile-image" id="profile-image">
+
+
+    </div>
+    
+    <div class="label">Nickname:</div>
+    <div class="user-name"id="user-name">John Doe</div>
+        
+    <div class="label">Email:</div>
+    <div class="user-name"id="user-email">user@example.com</div>
+        <div class="label">Country:</div>
+    <div class="user-name"id="user-country">USA</div>
+
+    
+    <div class="label preference-label">Which are your favorite styles?</div>
+    <div class="preference-options">
+          <div class="preference-options">
+        <button class="preference-option" onclick="toggleOption(this)" value="Basics">Basics</button>
+        <button class="preference-option" onclick="toggleOption(this)" value="Casual">Casual</button>
+        <button class="preference-option" onclick="toggleOption(this)" value="Sexy">Sexy</button>
+        <button class="preference-option" onclick="toggleOption(this)"value="Sporty">Sporty</button>
+        <button class="preference-option" onclick="toggleOption(this)" value="Vintage">Vintage</button>
+        <button class="preference-option" onclick="toggleOption(this)" value="Vacation" >Vacation</button>
+        <button class="preference-option" onclick="toggleOption(this)" value="Party">Party</button>
+        <button class="preference-option" onclick="toggleOption(this)" value="Workwear">Workwear</button>
+        <button class="preference-option" onclick="toggleOption(this)" value="Wedding guest ">Wedding guest</button>
+    </div>
+    </div>
+          <div class="success-message" id="success-message"></div>
+    
+    <div class="button-container">
+        <button class="save-button" onclick="savePreferences()">Save Preferences</button>
+<button class="sign-out-button" onclick="signOut()">Sign Out</button>
+
+    </div>
+</div>
+
+<script>
+     let selectedPreferences = [];
+
+    function toggleOption(button) {
+        const value = button.value;
+
+        // Toggle the selection state
+        const index = selectedPreferences.indexOf(value);
+        if (index === -1) {
+            selectedPreferences.push(value);
+        } else {
+            selectedPreferences.splice(index, 1);
+        }
+
+        // Update the visual state (you can add visual feedback here if needed)
+        button.classList.toggle('selected');
+    }
+    // Assume you have a session on the server side that stores the user ID
+// and is accessible through a cookie or other means.
+
+// Function to get the user ID from the session
+function getUserId() {
+    // Retrieve the user ID from the session (you may need to adjust this based on your server implementation)
+    const userId = sessionStorage.getItem('userId'); // Assuming you stored it in sessionStorage
+
+    if (!userId) {
+        // Handle the case where the user ID is not available or not authenticated
+        console.error('User ID not available. User may not be authenticated.');
+        // You might want to redirect the user to the login page or handle this case appropriately.
+        // For simplicity, let's return a placeholder value.
+        return 'placeholderUserId';
+    }
+
+    return userId;
+}
+
+  function savePreferences() {
+        // Use the selectedPreferences array as needed (e.g., send it to the server)
+        console.log('Selected Preferences:', selectedPreferences);
+
+        // Make an HTTP request to update preferences in the database
+        const userId = getUserId(); // Assuming you have a function to get the user ID
+        const preferencesData = { userId: userId, preferences: selectedPreferences };
+
+       const urlParams = new URLSearchParams();
+for (const [key, value] of Object.entries(preferencesData)) {
+    urlParams.append(key, value);
+}
+
+fetch('/update-preferences', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: urlParams.toString(),
+})
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update preferences');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Preferences updated successfully:', data);
+
+            // Clear the success message
+            const successMessage = document.getElementById('success-message');
+            successMessage.textContent = '';
+
+            // Display success message
+            successMessage.textContent = 'Your preferences have been saved!';
+
+            // Clear the selected preferences array for the next use
+            selectedPreferences = [];
+            alert('Your preferences have been saved!');
+        })
+        .catch(error => {
+            console.error('Error updating preferences:', error);
+
+            // Optionally, handle the error and display a message to the user
+            const successMessage = document.getElementById('success-message');
+            successMessage.textContent = 'Failed to save preferences. Please try again.';
+            alert('Failed to save preferences');
+        });
+    }
+function signOut() {
+    
+      clearUserData();
+
+     const loaderContainer = document.createElement('div');
+  loaderContainer.className = 'loader-container';
+  loaderContainer.innerHTML = `
+    <section>
+      <div class="loader">
+        <span style="--i:1;"></span>
+        <span style="--i:2;"></span>
+        <span style="--i:3;"></span>
+        <span style="--i:4;"></span>
+        <span style="--i:5;"></span>
+        <span style="--i:6;"></span>
+        <span style="--i:7;"></span>
+        <span style="--i:8;"></span>
+        <span style="--i:9;"></span>
+        <span style="--i:10;"></span>
+        <span style="--i:11;"></span>
+        <span style="--i:12;"></span>
+        <span style="--i:13;"></span>
+        <span style="--i:14;"></span>
+        <span style="--i:15;"></span>
+        <span style="--i:16;"></span>
+        <span style="--i:17;"></span>
+        <span style="--i:18;"></span>
+        <span style="--i:19;"></span>
+        <span style="--i:20;"></span>
+      </div>
+    </section>
+  `;
+  document.body.appendChild(loaderContainer);
+
+  // Set a timeout to hide the loader and redirect after 3 seconds
+  setTimeout(function () {
+    // Remove the loader
+    document.body.removeChild(loaderContainer);
+
+    // Redirect to index.html
+  }, 3000);
+    fetch('/logout', {
+    method: 'GET',
+    credentials: 'same-origin', // Include credentials (e.g., session) in the request
+  })
+    .then(handleLogoutResponse) // Handle the server response
+    .catch(handleLogoutError);   // Handle any fetch errors
+}
+
+function handleLogoutResponse(response) {
+  console.log('Response status:', response.status);
+
+  if (response.ok) {
+    // Successful logout
+    console.log('Logout successful');
+    window.location.href = '/loginsignup.html';
+  } else {
+    // Handle non-OK response
+    console.error('Failed to logout. Non-OK response status:', response.status);
+    alert('Failed to logout. Please check the console for details.');
+    hideLoader(); // Hide the loader in case of an error
+  }
+}
+
+// Function to handle fetch errors during logout
+function handleLogoutError(error) {
+  console.error('Fetch error:', error);
+  alert('Failed to logout. Please check the console for details.');
+  hideLoader(); // Hide the loader in case of an error
+}
+
+// Function to clear user data
+function clearUserData() {
+  localStorage.removeItem('user'); // Clear user data from local storage
+}
+function clearUserData() {
+  localStorage.removeItem('user'); // Clear user data from local storage
+}
+
+
+    // Add an event listener to close the options list on clicking anywhere else
+  // MyProfile.html
+document.addEventListener('DOMContentLoaded', function () {
+    // Retrieve user information from local storage
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    // Update the user-name element
+    if (user) {
+        document.getElementById('user-name').textContent = user.name; 
+        document.getElementById('user-email').textContent = user.email; 
+        document.getElementById('user-country').textContent = user.country;
+         
+        // Create an image element
+        var productImage = document.createElement('img');
+        productImage.className = 'profile-image';  // Added 'product1' class
+        productImage.src = user.profile_image;
+
+        productImage.alt=user.name;   
+        // Remove any existing content in the profile-image container
+        var profileImageContainer = document.getElementById('profile-image');
+        profileImageContainer.innerHTML = '';
+
+        // Append the image element to the profile-image container
+        profileImageContainer.appendChild(productImage);
+    }
+});
+
+
+</script>
+
+</body>
+</html>

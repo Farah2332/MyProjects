@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Language Selector</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <h1 id="greeting">Hello World</h1>
+    <label for="languageSelect">Select Language:</label>
+    <select id="languageSelect" onchange="changeLanguage()">
+        <option value="en">English</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+    </select>
+
+    <script>
+        function changeLanguage() {
+            const greetingElement = document.getElementById('greeting');
+            const languageSelect = document.getElementById('languageSelect');
+            const selectedLanguage = languageSelect.value;
+
+            switch (selectedLanguage) {
+                case 'en':
+                    greetingElement.textContent = 'Hello World';
+                    break;
+                case 'fr':
+                    greetingElement.textContent = 'Bonjour le Monde';
+                    break;
+                case 'es':
+                    greetingElement.textContent = 'Hola Mundo';
+                    break;
+                default:
+                    greetingElement.textContent = 'Hello World'; // Default to English
+            }
+        }
+    </script>
+</body>
+
+</html>

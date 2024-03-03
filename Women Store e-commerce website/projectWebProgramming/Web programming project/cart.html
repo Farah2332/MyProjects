@@ -1,0 +1,224 @@
+<!-- wishlist.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    
+
+        #clearWishlist {
+            background-color:#E4BB40;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            margin-left: 1350px;
+        }
+          body {
+        margin: 0;
+        padding: 0;
+        background: white;
+        font-family: Arial, sans-serif;
+    }
+
+    #wishlist-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .wishlist-product {
+        text-align: center;
+        width: calc(25% - 20px); /* Adjust as needed */
+        margin: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+        position: relative; /* Position relative for absolute positioning */
+    }
+
+    .wishlist-product img {
+        width: 60%;
+        height: auto;
+    }
+
+    .wishlist-description {
+        color: black;
+        margin-top: 10px;
+    }
+
+    .wishlist-price {
+        color: orange;
+        margin-top: 5px;
+    }
+
+    .delete-button {
+        background-color: #E4BB40;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 3px;
+        font-size: 12px;
+        position: absolute;
+        bottom: -40px; /* Adjusted to be at the bottom */
+        left: 51%;
+        transform: translateX(-50%);
+        margin-top: 12px;
+    }
+       .buy-button {
+        background-color: #E4BB40;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 3px;
+        font-size: 12px;
+        position: absolute;
+        bottom: -13px; /* Adjusted to be at the bottom */
+        left: 51%;
+        transform: translateX(-50%);
+        margin-top: 12px;
+    }
+   h1 {
+        font-style: italic;
+        font-weight: bold;
+        font-family: 'Times New Roman', serif; /* Change the font family as needed */
+        color: #b8860b; /* Darker gold color */
+        text-shadow: 2px 2px 4px black; /* Add a shadow effect */
+        animation: glow 1s ease-in-out infinite alternate; /* Add a glow animation */
+    }
+
+    @keyframes glow {
+        from {
+            text-shadow: 2px 2px 4px black;
+        }
+
+        to {
+            text-shadow: 0 0 10px #b8860b; /* Darker gold color */
+        }
+    }
+    </style>
+    <!-- Add your head content here -->
+</head>
+<body>
+    <h1>Your Shopping Cart!</h1>
+      <div>
+        <button id="clearWishlist" onclick="clearWishlist()">Clear Shopping Cart</button>
+    </div>
+ <div id="wishlist-container">
+        <!-- Wishlist products will be dynamically added here -->
+    </div>
+
+</body>
+<!-- At the end of the <body> section of wishlist.html -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var wishlistContainer = document.getElementById('wishlist-container');
+    var wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+    wishlist.forEach(function (productDetails, index) {
+        var productContainer = document.createElement('div');
+        productContainer.className = 'wishlist-product';
+
+        var productImage = document.createElement('img');
+        productImage.src = productDetails.imageUrl;
+        productImage.alt = productDetails.description;
+
+        var productDescription = document.createElement('div');
+        productDescription.className = 'wishlist-description';
+        productDescription.textContent = productDetails.description;
+
+        var productPrice = document.createElement('div');
+        productPrice.className = 'wishlist-price';
+        productPrice.textContent = productDetails.price;
+
+        var deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-button';
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = function () {
+            deleteProduct(index);
+        };
+
+        var buyButton = document.createElement('button');
+        buyButton.className = 'buy-button';
+        buyButton.textContent = 'Buy';
+        buyButton.onclick = function () {
+            window.location.href = 'creditcart.html'; // Change 'buy.html' to the actual URL of your buy page
+        };
+
+        productContainer.appendChild(productImage);
+        productContainer.appendChild(productDescription);
+        productContainer.appendChild(productPrice);
+        productContainer.appendChild(deleteButton);
+        productContainer.appendChild(buyButton);
+
+        wishlistContainer.appendChild(productContainer);
+    });
+   
+});
+  
+function deleteProduct(index) {
+    // Implement your delete logic here
+}
+
+
+    function clearWishlist() {
+        var wishlistContainer = document.getElementById('wishlist-container');
+        wishlistContainer.innerHTML = ''; // Clear all content inside the container
+
+        // Clear the wishlist in localStorage
+        localStorage.removeItem('wishlist');
+    }
+
+    function deleteProduct(index) {
+        var wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+        // Remove the selected product from the wishlist
+        wishlist.splice(index, 1);
+
+        // Update the localStorage and reload the wishlist
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        loadWishlist();
+    }
+
+    function loadWishlist() {
+        var wishlistContainer = document.getElementById('wishlist-container');
+        wishlistContainer.innerHTML = ''; // Clear all content inside the container
+
+        var wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+        wishlist.forEach(function (productDetails, index) {
+            var productContainer = document.createElement('div');
+            productContainer.className = 'wishlist-product';
+
+            var productImage = document.createElement('img');
+            productImage.src = productDetails.imageUrl;
+            productImage.alt = productDetails.description;
+
+            var productDescription = document.createElement('div');
+            productDescription.className = 'wishlist-description';
+            productDescription.textContent = productDetails.description;
+
+            var productPrice = document.createElement('div');
+            productPrice.className = 'wishlist-price';
+            productPrice.textContent = productDetails.price;
+
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function () {
+                deleteProduct(index);
+            };
+
+            productContainer.appendChild(productImage);
+            productContainer.appendChild(productDescription);
+            productContainer.appendChild(productPrice);
+            productContainer.appendChild(deleteButton);
+
+            wishlistContainer.appendChild(productContainer);
+        });
+    }
+</script>
+
+</html>
