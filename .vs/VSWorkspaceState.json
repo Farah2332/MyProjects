@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\backend",
+    "\\backend\\frontend",
+    "\\backend\\frontend\\public",
+    "\\backend\\frontend\\src",
+    "\\backend\\frontend\\src\\assets",
+    "\\backend\\frontend\\src\\components",
+    "\\backend\\frontend\\src\\pages",
+    "\\backend\\models",
+    "\\backend\\routes"
+  ],
+  "SelectedNode": "\\backend\\frontend\\src\\pages\\CreateBooks.jsx",
+  "PreviewInSolutionExplorer": false
+}
